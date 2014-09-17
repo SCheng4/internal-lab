@@ -12,8 +12,14 @@ object LoopUntil extends App {
 
   // define the new control-flow structure here
 
-  var i = 0
+  def loop_until(condition: => Boolean)(body: => Unit): Unit = {
+    if (!condition) {
+      body
+      loop_until(condition)(body)
+    }
+  }
   
+  var i = 0
   loop_until (i > 9) {
       if ( (i % 2) == 0 )
           println(i)
