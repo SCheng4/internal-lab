@@ -13,27 +13,20 @@ package internal
 
 object RepeatUntil extends App {
   
-  // companion class for repeat.
-  object repeat {
-	def apply(x: => Unit):repeat = {
-		new repeat {
-			var body:Unit = x
-		}
-	}
-  }
+    def repeat(x: => Unit):Repeater = {
+      new Repeater(x) {}
+    }
   
   // define the new control-flow structure here
-  abstract class repeat {
-    var body:Unit
-	
+  class Repeater (body: => Unit){
+    
     def until(condition: => Boolean): Unit = {
       if (!condition) {
-    	body // warning on this line: "a pure expression does nothing in a statement position
+    	body
         repeat(body) until(condition)
       }
     }
   }
- 
   
   var i = 0
   repeat  {
